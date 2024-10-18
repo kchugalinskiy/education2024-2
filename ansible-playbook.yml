@@ -16,6 +16,8 @@
 #      - d-zabegaev
       - f-sitnikov
       - v-altukhov
+      - n-fedorova
+      - a-slesarenko
   tasks:
     - name: Add users with disabled password
       user:
@@ -85,9 +87,9 @@
       - o-lagutko
       #- d-zabegaev
 #      - f-sitnikov
-#      - n-fedorova
+      - n-fedorova
       - v-altukhov
-#      - a-slesarenko
+      - a-slesarenko
       #- o-danichkin
 
   tasks:
