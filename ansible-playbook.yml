@@ -1,66 +1,76 @@
 ---
-#- name: Create users and setup SSH
-#  hosts: all
-#  become: yes
-#  vars:
-#    users:
-#      - k-chugalinskiy
-#      - b-mihaenko
-#      - e-udalov
-#      - k-korshikov
-#      - m-makhmudov
-#      - s-kovalenko
-#      - v-filatov
-#      - m-kovalev
-#      - o-lagutko
-##      - d-zabegaev
-#      - f-sitnikov
-#  tasks:
-#    - name: Add users with disabled password
-#      user:
-#        name: "{{ item }}"
-#        password: '*'
-#        create_home: yes
-#      with_items: "{{ users }}"
-#
-#    - name: Create .ssh directory for each user
-#      file:
-#        path: "/home/{{ item }}/.ssh"
-#        state: directory
-#        owner: "{{ item }}"
-#        group: "{{ item }}"
-#        mode: '0700'
-#      with_items: "{{ users }}"
-#
-#    - name: Create authorized_keys file for each user
-#      file:
-#        path: "/home/{{ item }}/.ssh/authorized_keys"
-#        state: touch
-#        owner: "{{ item }}"
-#        group: "{{ item }}"
-#        mode: '0600'
-#      with_items: "{{ users }}"
-#
-#    - name: Set authorized key taken from file
-#      ansible.posix.authorized_key:
-#        user: "{{ item }}"
-#        state: present
-#        key: "{{ lookup('file', '.ssh/{{ item }}.pub') }}"
-#      with_items: "{{ users }}"
-#    - name: Add to sudeors
-#      community.general.sudoers:
-#        name: "{{ item }}"
-#        state: present
-#        user: "{{ item }}"
-#        runas: root
-#        commands: ALL
-#      with_items: "{{ users }}"
+- name: Create users and setup SSH
+  hosts: all
+  become: yes
+  vars:
+    users:
+      - k-chugalinskiy
+      - b-mihaenko
+      - e-udalov
+      - k-korshikov
+      - m-makhmudov
+      - s-kovalenko
+      - v-filatov
+      - m-kovalev
+      - o-lagutko
+#      - d-zabegaev
+      - f-sitnikov
+      - v-altukhov
+  tasks:
+    - name: Add users with disabled password
+      user:
+        name: "{{ item }}"
+        password: '*'
+        create_home: yes
+      with_items: "{{ users }}"
+
+    - name: Create .ssh directory for each user
+      file:
+        path: "/home/{{ item }}/.ssh"
+        state: directory
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0700'
+      with_items: "{{ users }}"
+
+    - name: Create authorized_keys file for each user
+      file:
+        path: "/home/{{ item }}/.ssh/authorized_keys"
+        state: touch
+        owner: "{{ item }}"
+        group: "{{ item }}"
+        mode: '0600'
+      with_items: "{{ users }}"
+
+    - name: Set authorized key taken from file
+      ansible.posix.authorized_key:
+        user: "{{ item }}"
+        state: present
+        key: "{{ lookup('file', '.ssh/{{ item }}.pub') }}"
+      with_items: "{{ users }}"
+    - name: Add to sudeors
+      community.general.sudoers:
+        name: "{{ item }}"
+        state: present
+        user: "{{ item }}"
+        runas: root
+        commands: ALL
+      with_items: "{{ users }}"
 
 - hosts: all
   become: true
   remote_user: root
+  gather_facts: yes
 
   vars:
+    packages_to_remove:
+      - docker.io
+      - docker-doc
+      - docker-compose
+      - docker-compose-v2
+      - podman-docker
+      - containerd
+      - runc
     pip_install_packages:
       - name: docker
     docker_users:
@@ -74,12 +84,12 @@
       - m-kovalev
       - o-lagutko
       #- d-zabegaev
-      - f-sitnikov
-      - n-fedorova
+#      - f-sitnikov
+#      - n-fedorova
       - v-altukhov
-      - a-slesarenko
+#      - a-slesarenko
       #- o-danichkin
 
+  tasks:
   roles:
-    - geerlingguy.pip
     - geerlingguy.docker
