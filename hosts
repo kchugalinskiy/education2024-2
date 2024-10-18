@@ -1,5 +1,5 @@
 [my_hosts]
-84.252.134.162
+84.252.133.133
 
 [my_hosts:vars]
 ansible_ssh_user=kostya
