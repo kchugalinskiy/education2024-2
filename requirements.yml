@@ -1,7 +1,7 @@
 ---
 roles:
-  - name: geerlingguy.pip
   - name: geerlingguy.docker
+  - name: mullholland.minikube
 
 collections:
   - name: community.general
