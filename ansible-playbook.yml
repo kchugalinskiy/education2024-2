@@ -18,6 +18,8 @@
       - v-altukhov
       - n-fedorova
       - a-slesarenko
+      - d-moshnyakov
+      - v-moshnyakov
   tasks:
     - name: Add users with disabled password
       user:
@@ -158,6 +160,8 @@
       - v-altukhov
       - a-slesarenko
       #- o-danichkin
+      - d-moshnyakov
+      - v-moshnyakov
 
   tasks:
   roles:
