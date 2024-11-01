@@ -18,6 +18,7 @@
       - v-altukhov
       - n-fedorova
       - a-slesarenko
+      - a-kozin
   tasks:
     - name: Add users with disabled password
       user:
